@@ -37,7 +37,9 @@ If you prefer you can easily build the docker image by yourself. After this the 
 ### Start the container
 The container has all pre requisites set up to run phpPgAdmin. Specify all needed environment variables.
 
-	$ sudo docker run -i -d -p 80 -e APACHE_SERVERNAME=jacksoncage.se -e POSTGRES_HOST=localhost -e POSTGRES_PORT=5432 jacksoncage/phppgadmin
+	$ sudo docker run -i -d -p 80 -e APACHE_SERVERNAME=jacksoncage.se --link postgres-osm:pg -e POSTGRES_HOST=$PG_PORT_5432_TCP_ADDR -e POSTGRES_PORT=$PG_PORT_5432_TCP_PORT chatelao/phppgadmin
+
+docker run -i -t --rm --link postgres-osm:pg --entrypoint /bin/bash postgres:9.3.6 -c 'psql -h $PG_PORT_5432_TCP_ADDR -p $PG_PORT_5432_TCP_PORT -U postgres postgres'
 
 Trying the browser on url http://localhost/phppgadmin.
 
